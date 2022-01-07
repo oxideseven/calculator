@@ -17,54 +17,111 @@ const btnDiv = document.getElementById('btnDiv');
 const btnEqu = document.getElementById('btnEqu');
 const btnClr = document.getElementById('btnClr');
 const displayOutput = document.getElementById('displayOutput');
+const resultOutput = document.getElementById('resultOutput');
 const buttons = document.querySelectorAll('button');
-
-const DEFAULT_DISPLAY = '0';
-const currentDisplay = DEFAULT_DISPLAY;
-
-displayOutput.textContent = currentDisplay;
 
 //UI Functions
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        console.log(button.id);
+        btnClicked(button.className, button.textContent);
     });
 });
+
+function btnClicked(classClicked, contentClicked){
+    if (equalPressed == false) {
+        if (classClicked == 'clrBtn') {
+            reset();
+        }
+        if (classClicked == 'equBtn') {
+            equalPressed = true;
+            operate(num1, op, num2);
+        }
+        if (classClicked == 'opBtn') {
+            op = contentClicked;
+            opSelected = true;
+        }
+        if (classClicked == 'numBtn') {
+            if (opSelected == true) {
+                num2 += contentClicked;
+            }
+            else {
+                num1 += contentClicked;
+            }
+        }
+        updateDisplay();
+    }
+    if (classClicked == 'clrBtn') {
+        reset();
+    }
+}
+
+function updateDisplay() {
+    displayOutput.textContent = `${num1} ${op} ${num2}`;
+}
+
+function reset() {
+    num1 = '';
+    num2 = '';
+    op = '';
+    opSelected = false;
+    equalPressed = false;
+    initialize();
+}
+
+//Function Variables
+let opSelected = false;
+let equalPressed = false;
+let num1 = '';
+let num2 = '';
+let op = '';
+let result;
 
 //Functions
 
 function addition(num1, num2) {
-    return num1 + num2;
+    result = parseInt(num1) + parseInt(num2);
+    resultOutput.textContent = result;
 }
 
 function subtraction(num1, num2) {
-    return num1 - num2;;
+    result = parseInt(num1) - parseInt(num2);
+    resultOutput.textContent = result;
 }
 
 function multiplication(num1, num2) {
-    return num1 * num2
+    result = parseInt(num1) * parseInt(num2);
+    resultOutput.textContent = result;
 }
 
 function division(num1, num2) {
-    return num1 / num2;
+    result = parseInt(num1) / parseInt(num2);
+    resultOutput.textContent = result;
 }
 
 function operate(num1, op, num2) {
 
     switch (op) {
-        case 'add':
+        case '+':
             return addition(num1, num2);
             break;
-        case 'sub':
+        case '-':
             return subtraction(num1, num2);
             break;
-        case 'mul':
+        case '*':
             return multiplication(num1, num2);
             break;
-        case 'div':
+        case '÷':
             return division(num1, num2);
             break;
     }
+    
 }
 
+//Initialization
+function initialize() {
+    displayOutput.textContent = '0';
+    resultOutput.textContent = '.';
+}
+
+initialize()
