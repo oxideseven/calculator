@@ -37,14 +37,23 @@ function btnClicked(classClicked, contentClicked){
             equalPressed = true;
             operate(num1, op, num2);
             opSelected = false;
+            num2Selected = false;
         }
-        if (classClicked == 'opBtn') {
-            op = contentClicked;
-            opSelected = true;
+        if (classClicked == 'opBtn'){
+            if (num2Selected == false) {
+                op = contentClicked;
+                opSelected = true;
+            }
+            if (num2Selected == true) {
+                equalPressed = true;
+                operate(num1, op, num2);
+                num2Selected = false;
+            }
         }
         if (classClicked == 'numBtn') {
             if (opSelected == true) {
                 num2 += contentClicked;
+                num2Selected = true;
             }
             else {
                 num1 += contentClicked;
@@ -54,17 +63,28 @@ function btnClicked(classClicked, contentClicked){
     
     if (equalPressed == true) {
         if (classClicked == 'opBtn') {
-            num1 = result;
-            op = contentClicked;
-            num2 = '';
-            opSelected = true;
+            if (num2Selected == false) {
+                op = contentClicked;
+                opSelected = true;
+                num1 = result;
+                num2 = '';
+            }
+            if (num2Selected == true) {
+                equalPressed = true;
+                operate(num1, op, num2);
+                num2Selected = false;
+                num1 = result;
+                num2 = '';
+            }
         }
         if ((classClicked == 'numBtn') && (opSelected == true)) {
-        num2 += contentClicked;
+            num2 += contentClicked;
+            num2Selected = true;
         }
         if (classClicked == 'equBtn') {
             operate(num1, op, num2);
             opSelected = false;
+            num2Selected = false;
         }
         if (classClicked == 'clrBtn') {
             reset();
@@ -86,12 +106,14 @@ function reset() {
     op = '';
     opSelected = false;
     equalPressed = false;
+    num2Selected = false;
     initialize();
 }
 
 //Function Variables
 let opSelected = false;
 let equalPressed = false;
+let num2Selected = false;
 let num1 = '';
 let num2 = '';
 let op = '';
