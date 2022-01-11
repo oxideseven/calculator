@@ -36,6 +36,7 @@ function btnClicked(classClicked, contentClicked){
         if (classClicked == 'equBtn') {
             equalPressed = true;
             operate(num1, op, num2);
+            opSelected = false;
         }
         if (classClicked == 'opBtn') {
             op = contentClicked;
@@ -48,12 +49,31 @@ function btnClicked(classClicked, contentClicked){
             else {
                 num1 += contentClicked;
             }
+        } 
+    }
+    
+    if (equalPressed == true) {
+        if (classClicked == 'opBtn') {
+            num1 = result;
+            op = contentClicked;
+            num2 = '';
+            opSelected = true;
         }
-        updateDisplay();
+        if ((classClicked == 'numBtn') && (opSelected == true)) {
+        num2 += contentClicked;
+        }
+        if (classClicked == 'equBtn') {
+            operate(num1, op, num2);
+            opSelected = false;
+        }
+        if (classClicked == 'clrBtn') {
+            reset();
+        }
     }
     if (classClicked == 'clrBtn') {
         reset();
     }
+    updateDisplay();
 }
 
 function updateDisplay() {
