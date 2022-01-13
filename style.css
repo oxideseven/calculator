@@ -45,9 +45,41 @@ header {
 /* MAIN */
 
 button {
-    height: 32px;
-    width: 32px;
-    font-size: 24px;
+    height: 64px;
+    width: 64px;
+    font-size: 48px;
+	background-color: var(--dark1L);
+	border-style: none;
+}
+
+button:hover {
+	background-color: var(--dark1L-hover);
+}
+
+button:active {
+	background-color: var(--dark1L-active);
+}
+
+.calcBtns {
+	display: flex;
+	flex-wrap: wrap;
+	width: 260px;
+}
+
+#btnClr, #btnDel {
+	width: 128px;
+}
+
+.clrBtn {
+	background-color: var(--aem-purple);
+}
+
+.delBtn {
+	background-color: var(--aem-green);
+}
+
+.opBtn, .equBtn {
+	background-color: var(--aem-yellow);
 }
 
 /* FOOTER */
