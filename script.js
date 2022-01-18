@@ -146,16 +146,10 @@ function btnClicked(classClicked, contentClicked){
             break;
         
         case 'numBtn':
-            if (equalPressed == false) {
-                if (opSelected == true) {
-                    num2 += contentClicked;
-                    num2Selected = true;
-                }
-                else {
-                    num1 += contentClicked;
-                }
+            if ((opSelected == false) && (equalPressed == false)){
+                num1 += contentClicked;
             }
-            if ((equalPressed == true) && (opSelected == true)) {
+            else {
                 num2 += contentClicked;
                 num2Selected = true;
             }
