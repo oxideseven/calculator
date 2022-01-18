@@ -92,7 +92,7 @@ function btnClicked(classClicked, contentClicked){
         case 'equBtn':
             if (num2Selected == true) {
                 if ((num2 == 0) && (op == '÷')) {
-                    resultOutput.textContent = 'nonononono!';
+                    divZero();
                 }
                 else {
                     equalPressed = true;
@@ -111,7 +111,7 @@ function btnClicked(classClicked, contentClicked){
                 }
                 if (num2Selected == true) {
                     if ((num2 == 0) && (op == '÷')) {
-                        resultOutput.textContent = 'nonononono!';
+                        divZero();
                     }
                     else {
                         equalPressed = true;
@@ -131,7 +131,7 @@ function btnClicked(classClicked, contentClicked){
                 }
                 if (num2Selected == true) {
                     if ((num2 == 0) && (op == '÷')) {
-                        resultOutput.textContent = 'nonononono!';
+                        
                     }
                     else {
                         operate(num1, op, num2);
@@ -151,11 +151,15 @@ function btnClicked(classClicked, contentClicked){
             }
             else {
                 num2 += contentClicked;
-                num2Selected = true;
+                    num2Selected = true;
             }
             break;
     }
     displayOutput.textContent = `${num1} ${op} ${num2}`;
+}
+
+function divZero() {
+    resultOutput.textContent = 'nonononono!';
 }
 
 function reset() {
