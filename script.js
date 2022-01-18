@@ -1,26 +1,35 @@
 //UI Elements
 
-const btn0 = document.getElementById('btn0');
-const btn1 = document.getElementById('btn1');
-const btn2 = document.getElementById('btn2');
-const btn3 = document.getElementById('btn3');
-const btn4 = document.getElementById('btn4');
-const btn5 = document.getElementById('btn5');
-const btn6 = document.getElementById('btn6');
-const btn7 = document.getElementById('btn7');
-const btn8 = document.getElementById('btn8');
-const btn9 = document.getElementById('btn9');
-const btnAdd = document.getElementById('btnAdd');
-const btnSub = document.getElementById('btnSub');
-const btnMul = document.getElementById('btnMul');
-const btnDiv = document.getElementById('btnDiv');
-const btnEqu = document.getElementById('btnEqu');
-const btnClr = document.getElementById('btnClr');
-const btnDel = document.getElementById('btnDel');
-const btnDec = document.getElementById('btnDec');
 const displayOutput = document.getElementById('displayOutput');
 const resultOutput = document.getElementById('resultOutput');
 const buttons = document.querySelectorAll('button');
+
+//Keyboard support
+
+document.addEventListener('keyup', (event) => {
+    const operators = {
+        '+': 'btnAdd',
+        '-': 'btnSub',
+        '*': 'btnMul',
+        '/': 'btn5--Div',
+    }
+    buttons.forEach((button) => { button.blur(); });
+    if (!Number.isNaN(+event.key) && event.key !== ' ') {
+      document.getElementById(`btn${event.key}`).click();
+    } else if (event.key === 'Backspace') {
+      document.getElementById('btnDel').click();
+    } else if (event.key === 'Delete' || event.key === 'c' || event.key === 'C') {
+      document.getElementById('btnClr').click();
+    } else if (event.key === '.') {
+      document.getElementById('btnDec').click();
+    } else if (event.key === '=' || event.key === 'Enter') {
+      document.getElementById('btnEqu').click();
+    } else if (['+', '-', '*', '÷'].includes(event.key)) {
+      document.getElementById(operators[event.key]).click();
+    } else {
+      console.log('Wrong key:', event.key);
+    }
+});
 
 //UI Functions
 
@@ -31,6 +40,7 @@ buttons.forEach((button) => {
 });
 
 function btnClicked(classClicked, contentClicked){
+    
     if (classClicked == 'clrBtn') {
         reset();
     }
@@ -42,7 +52,7 @@ function btnClicked(classClicked, contentClicked){
                 dec2Pressed = false;
             }
         }
-        if ((num2Selected == false) && (opSelected == false)) {
+        if ((num2Selected == false) && (opSelected == false) && (equalPressed == false)) {
             num1 = num1.substring(0, num1.length - 1);
             if (num1.indexOf('.') == -1) {
                 dec1Pressed = false;
@@ -62,13 +72,17 @@ function btnClicked(classClicked, contentClicked){
     }
     
     if ((classClicked == 'equBtn') && (num2Selected == true)) {
-        equalPressed = true;
-        operate(num1, op, num2);
-        opSelected = false;
-        num2Selected = false;
-        dec1Pressed = false;
-        dec2Pressed = false;
-        
+        if ((num2 == 0) && (op == '÷')) {
+            resultOutput.textContent = 'nonononono!';
+        }
+        else {
+            equalPressed = true;
+            operate(num1, op, num2);
+            opSelected = false;
+            num2Selected = false;
+            dec1Pressed = false;
+            dec2Pressed = false; 
+        }
     }
 
     if (equalPressed == false) {
@@ -79,14 +93,20 @@ function btnClicked(classClicked, contentClicked){
                 opSelected = true;
             }
             if (num2Selected == true) {
-                equalPressed = true;
-                operate(num1, op, num2);
-                num2Selected = false;
-                op = contentClicked;
-                opSelected = true;
-                dec1Pressed = false;
-                dec2Pressed = false;
+                if ((num2 == 0) && (op == '÷')) {
+                    resultOutput.textContent = 'nonononono!';
+                }
+                else {
+                    equalPressed = true;
+                    operate(num1, op, num2);
+                    num2Selected = false;
+                    op = contentClicked;
+                    opSelected = true;
+                    dec1Pressed = false;
+                    dec2Pressed = false;
+                }
             }
+            
         }
         if (classClicked == 'numBtn') {
             if (opSelected == true) {
@@ -110,14 +130,19 @@ function btnClicked(classClicked, contentClicked){
                 num2 = '';
             }
             if (num2Selected == true) {
-                operate(num1, op, num2);
-                op = contentClicked;
-                opSelected = true;
-                num2Selected = false;
-                num1 = result;
-                num2 = '';
-                dec1Pressed = false;
-                dec2Pressed = false;
+                if ((num2 == 0) && (op == '÷')) {
+                    resultOutput.textContent = 'nonononono!';
+                }
+                else {
+                    operate(num1, op, num2);
+                    op = contentClicked;
+                    opSelected = true;
+                    num2Selected = false;
+                    num1 = result;
+                    num2 = '';
+                    dec1Pressed = false;
+                    dec2Pressed = false;
+                }
             }
         }
         if ((classClicked == 'numBtn') && (opSelected == true)) {
@@ -159,22 +184,22 @@ let result;
 
 function addition(num1, num2) {
     result = parseFloat(num1) + parseFloat(num2);
-    resultOutput.textContent = result;
+    cleanUP(result);
 }
 
 function subtraction(num1, num2) {
     result = parseFloat(num1) - parseFloat(num2);
-    resultOutput.textContent = result;
+    cleanUP(result);
 }
 
 function multiplication(num1, num2) {
     result = parseFloat(num1) * parseFloat(num2);
-    resultOutput.textContent = result;
+    cleanUP(result);
 }
 
 function division(num1, num2) {
     result = parseFloat(num1) / parseFloat(num2);
-    resultOutput.textContent = result;
+    cleanUP(result);
 }
 
 function operate(num1, op, num2) {
@@ -194,6 +219,11 @@ function operate(num1, op, num2) {
             break;
     }
     
+}
+
+function cleanUP (result){
+    result = result = Math.round((result + Number.EPSILON) * 1000000) / 1000000;
+    resultOutput.textContent = result;
 }
 
 //Initialization

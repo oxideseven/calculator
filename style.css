@@ -40,10 +40,36 @@ body {
 header {
 	background-color: var(--dark2);
 	color: var(--aem-yellow);
+	text-align: center;
 }
 
 /* MAIN */
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 
+.calculator {
+	border-style: solid;
+	border-color: var(--dark1L-active);
+	border-width: 1px;
+	margin-top: 24px;
+}
+
+#calcDisplay {
+	width: 256px;
+	background-color: var(--dark2);
+	color: var(--light1);
+	text-align: right;
+	padding: 4px;
+}
+#displayOutput {
+	font-size: 16px;
+}
+#resultOutput {
+	font-size: 32px;
+}
 button {
     height: 64px;
     width: 64px;
@@ -63,7 +89,7 @@ button:active {
 .calcBtns {
 	display: flex;
 	flex-wrap: wrap;
-	width: 260px;
+	width: 256px;
 }
 
 #btnClr, #btnDel {
